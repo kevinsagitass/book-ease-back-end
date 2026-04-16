@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./src/routes/auth.routes.js";
 import serviceRoutes from "./src/routes/service.routes.js";
+import categoryRoutes from "./src/routes/category.routes.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/api/categories", categoryRoutes);
 
 app.use(errorHandler);
 
