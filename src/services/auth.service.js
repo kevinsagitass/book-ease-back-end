@@ -34,7 +34,7 @@ export const registerUser = async (user) => {
     },
   });
 
-  const token = generateToken(user.id);
+  const token = generateToken(newUser.id);
 
   return {
     newUser,
