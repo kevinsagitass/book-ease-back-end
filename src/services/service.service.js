@@ -2,7 +2,9 @@ import prisma from "../config/prisma.js";
 
 export const getServices = async () => {
   try {
-    const services = await prisma.service.findMany();
+    const services = await prisma.service.findMany({
+      include: { category: true },
+    });
 
     return services;
   } catch (err) {
