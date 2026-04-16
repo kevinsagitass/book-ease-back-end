@@ -17,11 +17,7 @@ export const register = async (req, res) => {
       token: token,
     });
   } catch (err) {
-    console.log(err);
-    throw {
-      status: 500,
-      message: err,
-    };
+    throw err;
   }
 };
 
@@ -33,10 +29,6 @@ export const login = async (req, res) => {
 
     return successResponse(res, 200, "Success", result);
   } catch (err) {
-    console.log(err);
-    throw {
-      status: 500,
-      message: err,
-    };
+    throw err;
   }
 };
