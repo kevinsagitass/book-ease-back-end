@@ -5,6 +5,8 @@ import cors from "cors";
 import authRoutes from "./src/routes/auth.routes.js";
 import serviceRoutes from "./src/routes/service.routes.js";
 import categoryRoutes from "./src/routes/category.routes.js";
+import bookingRoutes from "./src/routes/booking.routes.js";
+import { authenticate } from "./src/middleware/auth.middleware.js";
 
 dotenv.config();
 
@@ -17,6 +19,7 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/bookings", authenticate, bookingRoutes);
 
 app.use(errorHandler);
 

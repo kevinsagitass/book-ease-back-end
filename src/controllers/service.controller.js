@@ -1,4 +1,8 @@
-import { getServices, getService } from "../services/service.service.js";
+import {
+  getServices,
+  getService,
+  getSlots,
+} from "../services/service.service.js";
 import { successResponse } from "../helper/response.js";
 
 export const getAllService = async (req, res) => {
@@ -37,6 +41,22 @@ export const getServiceById = async (req, res) => {
     const { id } = req.params;
 
     const result = await getService(id);
+
+    return successResponse(res, 200, "Success", result);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const getServiceSlots = async (req, res) => {
+  try {
+    const { date } = req.query;
+    const { id } = req.params;
+
+    const targetDate = new Date(date);
+    const dayOfWeek = targetDate.getDay();
+
+    const result = await getSlots(id, date, dayOfWeek);
 
     return successResponse(res, 200, "Success", result);
   } catch (err) {
