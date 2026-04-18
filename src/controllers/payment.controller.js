@@ -11,10 +11,7 @@ export const createPayment = async (req, res) => {
     return successResponse(res, 201, "Success", result);
   } catch (err) {
     console.log(err);
-    throw {
-      status: 500,
-      message: err,
-    };
+    throw err;
   }
 };
 
@@ -28,8 +25,7 @@ export const handleWebhook = async (req, res) => {
       });
     }
 
-    const rawBody = req.body.toString("utf8");
-    const event = JSON.parse(rawBody);
+    const event = req.body;
 
     if (event.status === "PAID" || event.status === "SETTLED") {
       const payment = await prisma.payment.findFirst({

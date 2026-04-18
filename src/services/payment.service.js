@@ -66,7 +66,7 @@ export const makePayment = async (bookingId, userId) => {
         invoice_paid: ["email"],
       },
       success_redirect_url: `${CLIENT_URL}/bookings/${booking.id}?payment=success`,
-      success_redirect_url: `${CLIENT_URL}/bookings/${booking.id}?payment=failed`,
+      failure_redirect_url: `${CLIENT_URL}/bookings/${booking.id}?payment=failed`,
       currency: "IDR",
       items: [
         {
