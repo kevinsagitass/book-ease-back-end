@@ -56,6 +56,56 @@ export const addBooking = async (booking, userId) => {
   }
 };
 
+export const getBookings = async (userId, paginationObject) => {
+  try {
+    const where = {
+      userId: userId,
+    };
+
+    if (paginationObject.status) {
+      where.status = paginationObject.status;
+    }
+
+    const bookings = await prisma.booking.findMany({
+      where: where,
+      include: {
+        service: {
+          include: {
+            category: true,
+          },
+        },
+        slot: true,
+        payment: true,
+      },
+      skip: paginationObject.skip,
+      take: parseInt(paginationObject.limit),
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const count = await prisma.booking.count({
+      where: where,
+    });
+
+    const pagination = {
+      ...paginationObject,
+      total: count,
+      totalPage: Math.ceil(count / parseInt(paginationObject.limit)),
+    };
+
+    return {
+      bookings,
+      pagination,
+    };
+  } catch (err) {
+    throw {
+      status: 500,
+      message: err,
+    };
+  }
+};
+
 export const getBooking = async (id, userId) => {
   try {
     const booking = await prisma.booking.findFirst({
@@ -112,6 +162,39 @@ export const cancelBooking = async (id, userId) => {
     });
 
     return updated;
+  } catch (err) {
+    throw {
+      status: 500,
+      message: err,
+    };
+  }
+};
+
+export const getBookingCountStats = async (userId) => {
+  try {
+    const confirmed = await prisma.booking.count({
+      where: {
+        status: "CONFIRMED",
+      },
+    });
+
+    const upcoming = await prisma.booking.count({
+      where: {
+        OR: [{ status: "WAITING_PAYMENT" }, { status: "PENDING" }],
+      },
+    });
+
+    const completed = await prisma.booking.count({
+      where: {
+        status: "COMPLETED",
+      },
+    });
+
+    return {
+      confirmed,
+      upcoming,
+      completed,
+    };
   } catch (err) {
     throw {
       status: 500,
