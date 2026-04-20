@@ -7,6 +7,7 @@ import serviceRoutes from "./src/routes/service.routes.js";
 import categoryRoutes from "./src/routes/category.routes.js";
 import bookingRoutes from "./src/routes/booking.routes.js";
 import paymentRoutes from "./src/routes/payment.routes.js";
+import adminRoutes from "./src/routes/admin.routes.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use(errorHandler);
 
