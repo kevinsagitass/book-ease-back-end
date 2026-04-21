@@ -8,6 +8,8 @@ import categoryRoutes from "./src/routes/category.routes.js";
 import bookingRoutes from "./src/routes/booking.routes.js";
 import paymentRoutes from "./src/routes/payment.routes.js";
 import adminRoutes from "./src/routes/admin.routes.js";
+import "./src/config/passport.js";
+import passport from "passport";
 
 dotenv.config();
 
@@ -16,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
