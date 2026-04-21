@@ -5,7 +5,7 @@ export const getServices = async (where, paginationObject) => {
   try {
     const services = await prisma.service.findMany({
       where: where,
-      include: { category: true },
+      include: { category: true, slots: true },
       skip: parseInt(paginationObject.skip),
       take: parseInt(paginationObject.limit),
     });

@@ -36,7 +36,7 @@ export const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    return res.json(401).json({
+    return res.status(401).json({
       status: "Failed",
       message: "Unexpected",
     });
@@ -51,5 +51,6 @@ export const authorize = (...roles) => {
         message: "Forbidden",
       });
     }
+    next();
   };
 };
